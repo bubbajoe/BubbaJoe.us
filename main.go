@@ -20,9 +20,7 @@ var ADMIN_PASSWORD string
 
 func main() {
   port := flag.String("port", "3000", "Port for application")
-
   flag.Parse()
-
   r := mux.NewRouter()
   // 404 Handler
   r.NotFoundHandler = http.HandlerFunc(HTTP404Handler)

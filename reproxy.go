@@ -83,8 +83,8 @@ func RunCommand(cmd string, wg *sync.WaitGroup) {
 	go ReadWrite(id, stderr)
 	// Waits for the app to close
 	app.Wait()
-	fmt.Println(id, "Restarting Server")
 	wg.Add(1)
+	fmt.Println(id, "Closed")
 	//go RunCommand(cmd, wg)
 }
 
