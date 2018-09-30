@@ -3,6 +3,7 @@ package main
 import (
   _ "os"
   "log"
+  "flag"
   "strings"
   _ "net/url"
   "net/http"
@@ -18,6 +19,10 @@ var ADMIN_USERNAME string
 var ADMIN_PASSWORD string
 
 func main() {
+  port := flag.String("port", "3000", "Port for application")
+
+  flag.Parse()
+
   r := mux.NewRouter()
   // 404 Handler
   r.NotFoundHandler = http.HandlerFunc(HTTP404Handler)
@@ -30,22 +35,9 @@ func main() {
   http.HandleFunc("/get/repos", get_repos)
   //http.HandleFunc("/add/click", nil)
   //http.HandleFunc("/get/data", nil)
-  log.Println("http://localhost:3000")
-  http.ListenAndServe(":3000", nil)
+  log.Println("http://localhost:"+*port)
+  http.ListenAndServe(":"+*port, nil)
 }
-
-func AdminLoginHandler(w http.ResponseWriter, r *http.Request) {
-  if auth, err := Authorized(w,r); !auth {
-    if err != nil {
-      //http.Error(w, err, 401)
-      log.Println(err)
-    } else {
-      http.Error(w, "Not Authorized", 401)
-    }
-    return
-  }  
-}
-
 
 func AdminHandler(w http.ResponseWriter, r *http.Request) {
   if auth, err := Authorized(w,r); !auth {
