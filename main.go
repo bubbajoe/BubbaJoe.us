@@ -21,7 +21,6 @@ func main() {
   r := mux.NewRouter()
   // 404 Handler
   r.NotFoundHandler = http.HandlerFunc(HTTP404Handler)
-
   // File server
   fs := http.FileServer(http.Dir("static"))
   http.Handle("/", fs)
